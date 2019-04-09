@@ -18,7 +18,7 @@ testi<- qic(dfi$X__1,
 #extract underlying data from chart 
 test3<-testi$data
 #create I chart with moving ranges
-test3i<-qic(dfi$X__1,
+test3i<-qic(dfi$`Range Data Points`,
     data      = dfi, 
     chart     = 'mr',
     show.grid = TRUE,
