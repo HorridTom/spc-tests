@@ -1,6 +1,9 @@
 #Test analysis of the I chart 
 library(tidyverse)
 
+#Load qicharts2
+library(qicharts2)
+
 #pick out chart
 dfi <- data_list[["Spc_I"]]
 #view chart to identify empty column 
@@ -27,19 +30,21 @@ write_csv(i_chart_results, path = "data-out/c_chart_results.csv")
 
 
 #create I chart with moving ranges (MR)
-i_chart_MR<-qic(dfi$`Range Data Points`,
+i_chart_MR<-qic(dfi$X__1,
     data      = dfi, 
     chart     = 'mr',
-    show.grid = TRUE,
+    show.grid = FALSE,
     title     = 'Age of the last 100 patients (MR chart)',
     ylab      = 'Years',
-    xlab      = 'Patient #')
+    xlab      = 'Patient #',
+    y.neg = TRUE)
 #extract data from I chart with moving ranges
 i_chart_MR_data<-i_chart_MR$data
 
 
 #save results for I chart with moving ranges (MR)
 i_chart_MR_results<- i_chart_MR_data %>% select(y.sum, cl, lcl, ucl) %>%
+  mutate(lcl = cl - (ucl - cl)) %>%
   rename(`Range Data Points`= y.sum, `Range Averages` = cl, `Range LCLs` = lcl, `Range UCLs` = ucl)
 
 write_csv(i_chart_MR_results, path = "data-out/i_chart_MR_results.csv")
