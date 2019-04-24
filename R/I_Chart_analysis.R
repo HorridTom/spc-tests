@@ -44,7 +44,6 @@ i_chart_MR_data<-i_chart_MR$data
 
 #save results for I chart with moving ranges (MR)
 i_chart_MR_results<- i_chart_MR_data %>% select(y.sum, cl, lcl, ucl) %>%
-  mutate(lcl = cl - (ucl - cl)) %>%
   rename(`Range Data Points`= y.sum, `Range Averages` = cl, `Range LCLs` = lcl, `Range UCLs` = ucl)
 
 write_csv(i_chart_MR_results, path = "data-out/i_chart_MR_results.csv")
